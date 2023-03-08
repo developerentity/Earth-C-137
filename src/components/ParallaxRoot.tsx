@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { Parallax, ParallaxLayer, IParallax } from '@react-spring/parallax'
-import { DefaultDeserializer } from 'v8'
+import { Box } from '@mui/system'
+import CharactersView from './CharactersView'
 
 // Little helpers ...
 const url = (name: string, wrap = false) =>
@@ -80,13 +81,13 @@ const ParallaxRoot = () => {
         <ParallaxLayer
           offset={0}
           speed={0.1}
-          onClick={() => parallax.current.scrollTo(1)}
+          // onClick={() => parallax.current.scrollTo(1)}
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <img src={url('server')} style={{ width: '20%' }} />
+          <CharactersView />
         </ParallaxLayer>
 
         <ParallaxLayer
