@@ -1,9 +1,7 @@
 import React, { useRef } from 'react'
 import { Parallax, ParallaxLayer, IParallax } from '@react-spring/parallax'
-import { Box } from '@mui/system'
 import CharactersView from './CharactersView'
 
-// Little helpers ...
 const url = (name: string, wrap = false) =>
   `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`
 

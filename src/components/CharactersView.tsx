@@ -5,33 +5,21 @@ import {
   CardContent,
   CardMedia,
   Grid,
-  Pagination,
-  Paper,
   TextField,
-  Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { getCharacters } from "../app/slices/charactersSlice";
+import PaginationContainer from "./PaginationContainer";
 
 const CharactersView = () => {
-  const [info, setInfo] = useState({});
-  const [items, setItems] = useState([]);
-
-  const getData = async () => {
-    const res = await fetch("https://rickandmortyapi.com/api/character");
-    const data = await res.json();
-    setInfo(data.info);
-    setItems(data.results);
-  };
+  const dispatch = useAppDispatch();
+  const { characters } = useAppSelector((state) => state.characters);
 
   useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    console.log(info);
-    console.log(items);
-  }, [info, items]);
+    dispatch(getCharacters());
+  }, [dispatch]);
 
   return (
     <Box sx={{ mx: 3, maxHeight: "100vh" }}>
@@ -57,7 +45,7 @@ const CharactersView = () => {
         </div>
       </Box>
       <Grid container justifyContent="center" spacing={2}>
-        {items.map((item) => (
+        {characters.map((item) => (
           <Grid key={item.id} item xs={1}>
             <Card sx={{ height: "100%" }}>
               <CardActionArea>
@@ -80,7 +68,12 @@ const CharactersView = () => {
         }}
       >
         <Stack spacing={2}>
-          <Pagination count={10} shape="rounded" color="secondary" />
+          <PaginationContainer
+            page={1}
+            count={834}
+            perPage={20}
+            setPage={() => {}}
+          />
         </Stack>
       </Box>
     </Box>
