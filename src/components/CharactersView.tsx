@@ -1,17 +1,12 @@
 import {
   Box,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
   Grid,
   TextField,
 } from "@mui/material";
-import { Stack } from "@mui/system";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { getCharacters } from "../app/slices/charactersSlice";
-import PaginationContainer from "./PaginationContainer";
+import OneCharacter from "./OneCharacter";
 
 const CharactersView = () => {
   const dispatch = useAppDispatch();
@@ -44,38 +39,13 @@ const CharactersView = () => {
           />
         </div>
       </Box>
-      <Grid container justifyContent="center" spacing={2}>
+      <Grid container justifyContent="center" spacing={1}>
         {characters.map((item) => (
-          <Grid key={item.id} item xs={1}>
-            <Card sx={{ height: "100%" }}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  image={item.image}
-                  alt={`${item.name} avatar`}
-                />
-                <CardContent>{item.name}</CardContent>
-              </CardActionArea>
-            </Card>
+          <Grid key={item.id} item xs={2.8} sm={2.4} md={1.2}>
+            <OneCharacter character={item} />
           </Grid>
         ))}
       </Grid>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          my: 2,
-        }}
-      >
-        <Stack spacing={2}>
-          <PaginationContainer
-            page={1}
-            count={834}
-            perPage={20}
-            setPage={() => {}}
-          />
-        </Stack>
-      </Box>
     </Box>
   );
 };
