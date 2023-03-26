@@ -1,40 +1,36 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  Action,
+  createSlice,
+  PayloadAction,
+  ThunkAction,
+} from "@reduxjs/toolkit";
 import { ICharacter } from "../../interfaces/characterInterface";
 import { fetchCharacters } from "../../requests/characters";
+import { RootState } from "../store";
 
 interface IInitialState {
   count: number;
-  pages: number;
-  prevPage: string | null;
-  nextPage: string | null;
+  page: number;
   perPage: number;
   characters: Array<ICharacter>;
 }
 
 const initialState: IInitialState = {
   count: 0,
-  pages: 0,
-  prevPage: "",
-  nextPage: "",
+  page: 1,
   perPage: 20,
   characters: [],
 };
 
 const charactersSlice = createSlice({
-  name: "characters",
+  name: "charactersSlice",
   initialState,
   reducers: {
     setCount(state, action: PayloadAction<number>) {
       state.count = action.payload;
     },
-    setPages(state, action: PayloadAction<number>) {
-      state.pages = action.payload;
-    },
-    setPrevPage(state, action: PayloadAction<string | null>) {
-      state.prevPage = action.payload;
-    },
-    setNextPage(state, action: PayloadAction<string | null>) {
-      state.nextPage = action.payload;
+    setPage(state, action: PayloadAction<number>) {
+      state.page = action.payload;
     },
     setPerPage(state, action: PayloadAction<number>) {
       state.perPage = action.payload;
@@ -45,30 +41,19 @@ const charactersSlice = createSlice({
   },
 });
 
-const {
-  setCount,
-  setPages,
-  setPrevPage,
-  setNextPage,
-  setPerPage,
-  setCharacters,
-} = charactersSlice.actions;
+export const { setCount, setPage, setCharacters } = charactersSlice.actions;
 
-export const getCharacters = createAsyncThunk(
-  "characters/fetchCharacters",
-  async (_, { dispatch }) => {
-    // dispatch({ type: "FETCH_CHARACTERS_REQUEST" });
+export const getCharacters = (): ThunkAction<void, RootState, unknown, Action<string>> => {
+  return async (dispatch, getState) => {
+    const { characters } = getState();
     try {
-      const response = await fetchCharacters();
+      const response = await fetchCharacters({page: characters.page});
       dispatch(setCount(response.info.count));
-      dispatch(setPages(response.info.pages));
-      dispatch(setPrevPage(response.info.prev));
-      dispatch(setNextPage(response.info.next));
       dispatch(setCharacters(response.results));
     } catch (error) {
       //   return dispatch(setRequestError(error));
     }
-  }
-);
+  };
+};
 
 export default charactersSlice.reducer;
