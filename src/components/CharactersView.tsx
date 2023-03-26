@@ -1,27 +1,44 @@
 import {
   Box,
   Grid,
+  TextField,
 } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { getCharacters, setPage } from "../app/slices/charactersSlice";
+import { getCharacters, setPage, setQuery } from "../app/slices/charactersSlice";
+import { useDebounce } from "../hooks/useDebounce";
 import OneCharacter from "./OneCharacter";
 import PaginationContainer from "./PaginationContainer";
 
 const CharactersView = () => {
+
   const dispatch = useAppDispatch();
-  const { characters, perPage, count, page } = useAppSelector((state) => state.characters);
+  const { characters, perPage, count, page, query } = useAppSelector((state) => state.characters);
+
+  const [instantQuery, setInstantQuery] = useState<string>()
+  const delay = 500;
+  const debouncedQuery = useDebounce(instantQuery, delay)
+
+  useEffect(() => {
+    dispatch(setQuery(debouncedQuery))
+    dispatch(setPage(1))
+  }, [dispatch, debouncedQuery])
 
   useEffect(() => {
     dispatch(getCharacters());
-  }, [dispatch, page]);
+  }, [dispatch, page, query]);
 
   const handlePageChange = (newPage: number) => {
     dispatch(setPage(newPage))
   }
 
+  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInstantQuery(event.target.value)
+  }
+
   return (
     <Box sx={{ mx: 3, maxHeight: "100vh" }}>
+      <TextField onChange={handleQueryChange} id="outlined-basic" label="Outlined" variant="outlined" />
       <Grid container justifyContent="center" spacing={1}>
         {characters.map((item) => (
           <Grid

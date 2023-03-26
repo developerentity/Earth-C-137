@@ -9,6 +9,7 @@ import { fetchCharacters } from "../../requests/characters";
 import { RootState } from "../store";
 
 interface IInitialState {
+  query: string | undefined;
   count: number;
   page: number;
   perPage: number;
@@ -16,6 +17,7 @@ interface IInitialState {
 }
 
 const initialState: IInitialState = {
+  query: "",
   count: 0,
   page: 1,
   perPage: 20,
@@ -26,6 +28,9 @@ const charactersSlice = createSlice({
   name: "charactersSlice",
   initialState,
   reducers: {
+    setQuery(state, action: PayloadAction<string | undefined>) {
+      state.query = action.payload;
+    },
     setCount(state, action: PayloadAction<number>) {
       state.count = action.payload;
     },
@@ -41,13 +46,22 @@ const charactersSlice = createSlice({
   },
 });
 
-export const { setCount, setPage, setCharacters } = charactersSlice.actions;
+export const { setQuery, setCount, setPage, setCharacters } =
+  charactersSlice.actions;
 
-export const getCharacters = (): ThunkAction<void, RootState, unknown, Action<string>> => {
+export const getCharacters = (): ThunkAction<
+  void,
+  RootState,
+  unknown,
+  Action<string>
+> => {
   return async (dispatch, getState) => {
     const { characters } = getState();
     try {
-      const response = await fetchCharacters({page: characters.page});
+      const response = await fetchCharacters({
+        page: characters.page,
+        name: characters.query,
+      });
       dispatch(setCount(response.info.count));
       dispatch(setCharacters(response.results));
     } catch (error) {
