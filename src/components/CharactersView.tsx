@@ -40,7 +40,8 @@ const CharactersView = () => {
         {characters.map((item) => (
           <Grid
             key={item.id}
-            item xs={2.8}
+            item 
+            xs={2.8}
             sm={2.4}
             md={1.2}>
             <OneCharacter character={item} />
