@@ -1,4 +1,4 @@
-export interface IResponse {
+export interface ICharactersResponse {
   info: {
     count: number;
     pages: number;
@@ -6,6 +6,16 @@ export interface IResponse {
     prev: string | null;
   };
   results: Array<ICharacter>;
+}
+
+export interface ILocationsResponse {
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
+  results: Array<ILocation>;
 }
 
 export interface ICharacter {
@@ -27,4 +37,13 @@ export interface ICharacter {
   episode: Array<string>;
   url: string;
   created: string;
+}
+
+export interface ILocation {
+  created: string;
+  dimension: string;
+  id: number;
+  residents: string[];
+  type: string;
+  url: string;
 }
