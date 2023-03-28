@@ -5,7 +5,7 @@ import {
   ThunkAction,
 } from "@reduxjs/toolkit";
 import { ILocation } from "../../interfaces/characterInterface";
-import { fetchLocations } from "../../requests/characters";
+import { fetchLocations } from "../../requests/requests";
 import { RootState } from "../store";
 
 interface IInitialState {
@@ -43,12 +43,8 @@ const locationsSlice = createSlice({
   },
 });
 
-export const {
-  setQuery,
-  setCount,
-  setPage,
-  setLocations,
-} = locationsSlice.actions;
+export const { setQuery, setCount, setPage, setLocations } =
+  locationsSlice.actions;
 
 export const getLocations = (): ThunkAction<
   void,

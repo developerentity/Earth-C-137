@@ -5,7 +5,7 @@ import {
   ThunkAction,
 } from "@reduxjs/toolkit";
 import { ICharacter } from "../../interfaces/characterInterface";
-import { fetchCharacters } from "../../requests/characters";
+import { fetchCharacters } from "../../requests/requests";
 import { RootState } from "../store";
 
 interface IInitialState {
