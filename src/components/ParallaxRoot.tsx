@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { Parallax, ParallaxLayer, IParallax } from '@react-spring/parallax'
 import CharactersView from './CharactersView'
+import LocationsView from './LocationsView'
 
 const url = (name: string, wrap = false) =>
   `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`
@@ -91,16 +92,17 @@ const ParallaxRoot = () => {
         <ParallaxLayer
           offset={1}
           speed={0.1}
-          onClick={() => parallax.current.scrollTo(2)}
+          onClick={() => {}}
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <img src={url('bash')} style={{ width: '40%' }} />
+          <LocationsView />
+          {/* <img src={url('bash')} style={{ width: '40%' }} /> */}
         </ParallaxLayer>
 
-        <ParallaxLayer
+        {/* <ParallaxLayer
           offset={2}
           speed={-0}
           style={{
@@ -110,7 +112,7 @@ const ParallaxRoot = () => {
           }}
           onClick={() => parallax.current.scrollTo(0)}>
           <img src={url('clients-main')} style={{ width: '40%' }} />
-        </ParallaxLayer>
+        </ParallaxLayer> */}
       </Parallax>
     </div>
   )

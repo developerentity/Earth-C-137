@@ -40,6 +40,7 @@ export interface ICharacter {
 }
 
 export interface ILocation {
+  name: string;
   created: string;
   dimension: string;
   id: number;

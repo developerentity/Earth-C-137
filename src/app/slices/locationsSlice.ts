@@ -28,13 +28,13 @@ const locationsSlice = createSlice({
   name: "locationsSlice",
   initialState,
   reducers: {
-    setQuery(state, action: PayloadAction<string | undefined>) {
+    setLocationsQuery(state, action: PayloadAction<string | undefined>) {
       state.query = action.payload;
     },
     setCount(state, action: PayloadAction<number>) {
       state.count = action.payload;
     },
-    setPage(state, action: PayloadAction<number>) {
+    setLocationsPage(state, action: PayloadAction<number>) {
       state.page = action.payload;
     },
     setLocations(state, action: PayloadAction<Array<ILocation>>) {
@@ -43,8 +43,7 @@ const locationsSlice = createSlice({
   },
 });
 
-export const { setQuery, setCount, setPage, setLocations } =
-  locationsSlice.actions;
+export const { setLocationsQuery, setLocationsPage } = locationsSlice.actions;
 
 export const getLocations = (): ThunkAction<
   void,
@@ -59,8 +58,8 @@ export const getLocations = (): ThunkAction<
         page: locations.page,
         name: locations.query,
       });
-      dispatch(setCount(response.info.count));
-      dispatch(setLocations(response.results));
+      dispatch(locationsSlice.actions.setCount(response.info.count));
+      dispatch(locationsSlice.actions.setLocations(response.results));
     } catch (error) {
       //   return dispatch(setRequestError(error));
     }
