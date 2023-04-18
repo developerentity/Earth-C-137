@@ -15,15 +15,22 @@ import {
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { getLocations, setLocationsPage } from '../app/slices/locationsSlice';
+import { getLocations, getResidentsForOneLocationById, setLocationsPage } from '../app/slices/locationsSlice';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { ILocation } from '../interfaces/characterInterface';
 
 
 const Row = (props: { row: ILocation }) => {
+
+    const dispatch = useAppDispatch();
     const { row } = props;
     const [open, setOpen] = useState(false);
+
+    const onShowCharactersHandle = () => {
+        dispatch(getResidentsForOneLocationById(row.id))
+        setOpen(!open)
+    }
 
     return (
         <>
@@ -35,7 +42,7 @@ const Row = (props: { row: ILocation }) => {
                     <Button
                         aria-label="expand row"
                         size="small"
-                        onClick={() => setOpen(!open)}
+                        onClick={onShowCharactersHandle}
                     >
                         {row.residents?.length} {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </Button>
@@ -51,17 +58,16 @@ const Row = (props: { row: ILocation }) => {
                             <Table size="small" aria-label="residents of location">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Link</TableCell>
                                         {/* <TableCell>Customer</TableCell>
                                         <TableCell align="right">Amount</TableCell>
                                         <TableCell align="right">Total price ($)</TableCell> */}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row.residents.map((resident) => (
-                                        <TableRow key={resident}>
+                                    {row?.residentsData?.map((resident) => (
+                                        <TableRow key={resident.id}>
                                             <TableCell component="th" scope="row">
-                                                {resident}
+                                                {resident.name}
                                             </TableCell>
                                             {/* <TableCell>{historyRow.customerId}</TableCell>
                                             <TableCell align="right">{historyRow.amount}</TableCell>

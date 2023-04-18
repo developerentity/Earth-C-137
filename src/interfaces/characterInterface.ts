@@ -45,6 +45,7 @@ export interface ILocation {
   dimension: string;
   id: number;
   residents: string[];
+  residentsData: ICharacter[] | null;
   type: string;
   url: string;
 }
