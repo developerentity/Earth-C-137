@@ -4,20 +4,13 @@ import {
   PayloadAction,
   ThunkAction,
 } from "@reduxjs/toolkit";
-import { ICharacter, ILocation } from "../../interfaces/characterInterface";
+import { ICharacter } from "../../interfaces/characterInterface";
+import { ILocation, ILocationsInitialState } from "../../interfaces/locationInterface";
 import { getDataByUrl } from "../../requests";
 import { fetchLocations } from "../../requests/requests";
 import { RootState } from "../store";
 
-interface IInitialState {
-  query: string | undefined;
-  count: number;
-  page: number;
-  perPage: number;
-  locations: Array<ILocation>;
-}
-
-const initialState: IInitialState = {
+const initialState: ILocationsInitialState = {
   query: "",
   count: 0,
   page: 1,

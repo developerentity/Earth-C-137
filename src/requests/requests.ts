@@ -1,8 +1,8 @@
 import { getDataByUrl } from ".";
 import {
   ICharactersResponse,
-  ILocationsResponse,
 } from "../interfaces/characterInterface";
+import { ILocationsResponse } from "../interfaces/locationInterface";
 
 const baseUrl = "https://rickandmortyapi.com/api/";
 

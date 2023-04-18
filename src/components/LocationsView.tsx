@@ -18,8 +18,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { getLocations, getResidentsForOneLocationById, setLocationsPage } from '../app/slices/locationsSlice';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { ILocation } from '../interfaces/characterInterface';
-
+import { ILocation } from '../interfaces/locationInterface';
 
 const Row = (props: { row: ILocation }) => {
 

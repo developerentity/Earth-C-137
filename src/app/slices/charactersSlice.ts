@@ -4,19 +4,11 @@ import {
   PayloadAction,
   ThunkAction,
 } from "@reduxjs/toolkit";
-import { ICharacter } from "../../interfaces/characterInterface";
+import { ICharacter, ICharactersInitialState } from "../../interfaces/characterInterface";
 import { fetchCharacters } from "../../requests/requests";
 import { RootState } from "../store";
 
-interface IInitialState {
-  query: string | undefined;
-  count: number;
-  page: number;
-  perPage: number;
-  characters: Array<ICharacter>;
-}
-
-const initialState: IInitialState = {
+const initialState: ICharactersInitialState = {
   query: "",
   count: 0,
   page: 1,
@@ -49,12 +41,14 @@ const charactersSlice = createSlice({
 export const { setQuery, setCount, setPage, setCharacters } =
   charactersSlice.actions;
 
-export const getCharacters = (): ThunkAction<
-  void,
+type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
   RootState,
   unknown,
   Action<string>
-> => {
+>;
+
+export const getCharacters = (): AppThunk<void> => {
   return async (dispatch, getState) => {
     const { characters } = getState();
     try {
