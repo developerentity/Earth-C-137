@@ -4,7 +4,10 @@ import {
   PayloadAction,
   ThunkAction,
 } from "@reduxjs/toolkit";
-import { ICharacter, ICharactersInitialState } from "../../interfaces/characterInterface";
+import {
+  ICharacter,
+  ICharactersInitialState,
+} from "../../interfaces/characterInterface";
 import { fetchCharacters } from "../../requests/requests";
 import { RootState } from "../store";
 
@@ -50,11 +53,11 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 export const getCharacters = (): AppThunk<void> => {
   return async (dispatch, getState) => {
-    const { characters } = getState();
+    const { charactersSlice } = getState();
     try {
       const response = await fetchCharacters({
-        page: characters.page,
-        name: characters.query,
+        page: charactersSlice.page,
+        name: charactersSlice.query,
       });
       dispatch(setCount(response.info.count));
       dispatch(setCharacters(response.results));

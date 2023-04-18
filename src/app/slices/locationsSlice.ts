@@ -5,7 +5,10 @@ import {
   ThunkAction,
 } from "@reduxjs/toolkit";
 import { ICharacter } from "../../interfaces/characterInterface";
-import { ILocation, ILocationsInitialState } from "../../interfaces/locationInterface";
+import {
+  ILocation,
+  ILocationsInitialState,
+} from "../../interfaces/locationInterface";
 import { getDataByUrl } from "../../requests";
 import { fetchLocations } from "../../requests/requests";
 import { RootState } from "../store";
@@ -54,6 +57,7 @@ const locationsSlice = createSlice({
   },
 });
 
+const { setCount, setLocations, setResidents } = locationsSlice.actions;
 export const { setLocationsQuery, setLocationsPage } = locationsSlice.actions;
 
 type AppThunk<ReturnType = void> = ThunkAction<
@@ -65,14 +69,14 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 export const getLocations = (): AppThunk<void> => {
   return async (dispatch, getState) => {
-    const { locations } = getState();
+    const { locationsSlice } = getState();
     try {
       const response = await fetchLocations({
-        page: locations.page,
-        name: locations.query,
+        page: locationsSlice.page,
+        name: locationsSlice.query,
       });
-      dispatch(locationsSlice.actions.setCount(response.info.count));
-      dispatch(locationsSlice.actions.setLocations(response.results));
+      dispatch(setCount(response.info.count));
+      dispatch(setLocations(response.results));
     } catch (error) {
       //   return dispatch(setRequestError(error));
     }
@@ -83,15 +87,15 @@ export const getResidentsForOneLocationById = (
   locationId: string | number
 ): AppThunk<void> => {
   return async (dispatch, getState) => {
-    const { locations } = getState();
-    const oneLocationData = locations.locations?.find(
+    const { locationsSlice } = getState();
+    const oneLocationData = locationsSlice.locations?.find(
       (location: ILocation) => location.id === locationId
     );
     const residentsUrlArray = oneLocationData?.residents || [];
 
     if (oneLocationData?.residentsData) {
-      return
-    } 
+      return;
+    }
 
     try {
       const results = [];
@@ -100,7 +104,7 @@ export const getResidentsForOneLocationById = (
         results.push(result);
       }
       dispatch(
-        locationsSlice.actions.setResidents({
+        setResidents({
           locationId,
           residentsData: results,
         })

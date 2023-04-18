@@ -88,7 +88,13 @@ const Row = (props: { row: ILocation }) => {
 const LocationsView = () => {
 
     const dispatch = useAppDispatch();
-    const { locations, perPage, page, count, query } = useAppSelector((state) => state.locations);
+    const {
+        locations,
+        perPage,
+        page,
+        count,
+        query
+    } = useAppSelector((state) => state.locationsSlice);
 
     useEffect(() => {
         dispatch(getLocations());

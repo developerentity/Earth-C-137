@@ -14,7 +14,13 @@ import SearchComponent from "./SearchComponent";
 const CharactersView = () => {
 
   const dispatch = useAppDispatch();
-  const { characters, perPage, count, page, query } = useAppSelector((state) => state.characters);
+  const {
+    characters,
+    perPage,
+    count,
+    page,
+    query
+  } = useAppSelector((state) => state.charactersSlice);
 
   const [instantQuery, setInstantQuery] = useState<string>('')
   const delay = 500;
@@ -40,7 +46,7 @@ const CharactersView = () => {
         {characters.map((item) => (
           <Grid
             key={item.id}
-            item 
+            item
             xs={2.8}
             sm={2.4}
             md={1.2}>
