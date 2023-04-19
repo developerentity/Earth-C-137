@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "../app/store";
+import { setRequestError } from "../app/slices/errorsSlice";
 
 export const getDataByUrl = async (url: string, params?: object) => {
   try {
@@ -8,7 +9,7 @@ export const getDataByUrl = async (url: string, params?: object) => {
     return response.data;
   } catch (error) {
     const { dispatch } = store;
-    //   return dispatch(setRequestError(error));
     console.error(error);
+    return dispatch(setRequestError(error));
   }
 };

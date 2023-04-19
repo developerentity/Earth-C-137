@@ -10,6 +10,7 @@ import {
 } from "../../interfaces/characterInterface";
 import { fetchCharacters } from "../../requests/requests";
 import { RootState } from "../store";
+import { setRequestError } from "./errorsSlice";
 
 const initialState: ICharactersInitialState = {
   query: "",
@@ -62,7 +63,7 @@ export const getCharacters = (): AppThunk<void> => {
       dispatch(setCount(response.info.count));
       dispatch(setCharacters(response.results));
     } catch (error) {
-      //   return dispatch(setRequestError(error));
+        return dispatch(setRequestError(error));
     }
   };
 };

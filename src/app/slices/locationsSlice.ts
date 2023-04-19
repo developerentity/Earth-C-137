@@ -12,6 +12,7 @@ import {
 import { getDataByUrl } from "../../requests";
 import { fetchLocations } from "../../requests/requests";
 import { RootState } from "../store";
+import { setRequestError } from "./errorsSlice";
 
 const initialState: ILocationsInitialState = {
   query: "",
@@ -78,7 +79,7 @@ export const getLocations = (): AppThunk<void> => {
       dispatch(setCount(response.info.count));
       dispatch(setLocations(response.results));
     } catch (error) {
-      //   return dispatch(setRequestError(error));
+      return dispatch(setRequestError(error));
     }
   };
 };
@@ -110,7 +111,7 @@ export const getResidentsForOneLocationById = (
         })
       );
     } catch (error) {
-      //   return dispatch(setRequestError(error));
+      return dispatch(setRequestError(error));
     }
   };
 };
