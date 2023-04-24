@@ -24,3 +24,11 @@ body {
 *:before {
   box-sizing: border-box;
 }
+
+nav a {
+  color: #61dafb;
+}
+
+nav a.active {
+  color: #818181;
+}
