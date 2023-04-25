@@ -17,7 +17,7 @@ import { setRequestError } from "./errorsSlice";
 const initialState: ILocationsInitialState = {
   query: "",
   count: 0,
-  page: 1,
+  page: 0,
   perPage: 20,
   locations: [],
 };
@@ -73,7 +73,7 @@ export const getLocations = (): AppThunk<void> => {
     const { locationsSlice } = getState();
     try {
       const response = await fetchLocations({
-        page: locationsSlice.page,
+        page: locationsSlice.page + 1,
         name: locationsSlice.query,
       });
       dispatch(setCount(response.info.count));
