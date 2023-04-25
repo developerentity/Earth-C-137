@@ -3,6 +3,7 @@ import ErrorPage from "../components/ErrorPage";
 import CharactersView from "../components/CharactersView";
 import LocationsView from "../components/LocationsView";
 import Root, { loader as rootLoader } from './root'
+import EpisodesView from "../components/EpisodesView";
 
 
 export const rootRouter = createBrowserRouter([
@@ -27,12 +28,12 @@ export const rootRouter = createBrowserRouter([
                         //   loader: locationsLoader,
                         //   action: locationsAction,
                     },
-                    // {
-                    // path: "episodes",
-                    // element: <EpisodesView />,
-                    //   loader: episodesLoader,
-                    //   action: episodes Action,
-                    // },
+                    {
+                        path: "episodes",
+                        element: <EpisodesView />,
+                        //   loader: episodesLoader,
+                        //   action: episodes Action,
+                    },
                 ],
             },
         ],

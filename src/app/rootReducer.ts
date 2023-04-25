@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import errorsSlice from "./slices/errorsSlice";
 import charactersSlice from "./slices/charactersSlice";
 import locationsSlice from "./slices/locationsSlice";
-import episodesSlice from "./slices/errorsSlice";
+import episodesSlice from "./slices/episodesSlice";
 
 const rootReducer = combineReducers({
   errorsSlice,

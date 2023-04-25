@@ -24,13 +24,13 @@ const episodesSlice = createSlice({
   name: "episodesSlice",
   initialState,
   reducers: {
-    setQuery(state, action: PayloadAction<string | undefined>) {
+    setEpisodesQuery(state, action: PayloadAction<string | undefined>) {
       state.query = action.payload;
     },
     setCount(state, action: PayloadAction<number>) {
       state.count = action.payload;
     },
-    setPage(state, action: PayloadAction<number>) {
+    setEpisodesPage(state, action: PayloadAction<number>) {
       state.page = action.payload;
     },
     setPerPage(state, action: PayloadAction<number>) {
@@ -42,8 +42,8 @@ const episodesSlice = createSlice({
   },
 });
 
-export const { setQuery, setCount, setPage, setEpisodes } =
-  episodesSlice.actions;
+const { setCount, setEpisodes } = episodesSlice.actions;
+export const { setEpisodesQuery, setEpisodesPage } = episodesSlice.actions;
 
 type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
