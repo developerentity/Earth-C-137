@@ -11,6 +11,8 @@ import {
   IEpisode,
   IEpisodesInitialState,
 } from "../../interfaces/episodeInterface";
+import { getDataByUrl } from "../../requests";
+import { ICharacter } from "../../interfaces/characterInterface";
 
 const initialState: IEpisodesInitialState = {
   query: "",
@@ -39,10 +41,27 @@ const episodesSlice = createSlice({
     setEpisodes(state, action: PayloadAction<Array<IEpisode>>) {
       state.episodes = [...action.payload];
     },
+    setCharacters(
+      state,
+      action: PayloadAction<{
+        episodeId: string | number;
+        residentsData: ICharacter[];
+      }>
+    ) {
+      state.episodes = [
+        ...state.episodes.map((episode) => {
+          if (episode.id === action.payload.episodeId) {
+            return { ...episode, residentsData: action.payload.residentsData };
+          } else {
+            return episode;
+          }
+        }),
+      ];
+    },
   },
 });
 
-const { setCount, setEpisodes } = episodesSlice.actions;
+const { setCount, setEpisodes, setCharacters } = episodesSlice.actions;
 export const { setEpisodesQuery, setEpisodesPage } = episodesSlice.actions;
 
 type AppThunk<ReturnType = void> = ThunkAction<
@@ -62,6 +81,38 @@ export const getEpisodes = (): AppThunk<void> => {
       });
       dispatch(setCount(response.info.count));
       dispatch(setEpisodes(response.results));
+    } catch (error) {
+      return dispatch(setRequestError(error));
+    }
+  };
+};
+
+export const getResidentsForOneEpisodeById = (
+  episodeId: string | number
+): AppThunk<void> => {
+  return async (dispatch, getState) => {
+    const { episodesSlice } = getState();
+    const oneEpisodeData = episodesSlice.episodes?.find(
+      (episode: IEpisode) => episode.id === episodeId
+    );
+    const residentsUrlArray = oneEpisodeData?.characters || [];
+
+    if (oneEpisodeData?.residentsData) {
+      return;
+    }
+
+    try {
+      const results = [];
+      for (const url of residentsUrlArray) {
+        const result = await getDataByUrl(url);
+        results.push(result);
+      }
+      dispatch(
+        setCharacters({
+          episodeId,
+          residentsData: results,
+        })
+      );
     } catch (error) {
       return dispatch(setRequestError(error));
     }
