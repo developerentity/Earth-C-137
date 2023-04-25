@@ -10,38 +10,52 @@ import {
     Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { useAppDispatch } from '../app/hooks';
-import { getResidentsForOneLocationById } from '../app/slices/locationsSlice';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { ILocation } from '../interfaces/locationInterface';
+import { ICharacter } from '../interfaces/characterInterface';
 
-const ResidentRow = (props: { row: ILocation }) => {
+type TProps = {
+    table_cell_id: string | number
+    table_cell_1: string
+    table_cell_2?: string
+    table_cell_3?: string
+    table_cell_4?: number
+    table_cell_func?: () => void
+    table_cell_data: Array<ICharacter> | null
+}
 
-    const dispatch = useAppDispatch();
-    const { row } = props;
+const ResidentRow = (props: TProps) => {
+
+    const {
+        table_cell_1,
+        table_cell_2,
+        table_cell_3,
+        table_cell_4,
+        table_cell_func,
+        table_cell_data
+    } = props;
     const [open, setOpen] = useState(false);
 
     const onShowCharactersHandle = () => {
-        dispatch(getResidentsForOneLocationById(row.id))
+        table_cell_func && table_cell_func()
         setOpen(!open)
     }
 
     return (
         <>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell component="th" scope="row">{row.name}</TableCell>
-                <TableCell align="right">{row.type}</TableCell>
-                <TableCell align="right">{row.dimension}</TableCell>
-                <TableCell align="right">
+                <TableCell component="th" scope="row">{table_cell_1}</TableCell>
+                {table_cell_2 ? <TableCell align="right">{table_cell_2}</TableCell> : null}
+                {table_cell_3 ? <TableCell align="right">{table_cell_3}</TableCell> : null}
+                {table_cell_4 ? <TableCell align="right">
                     <Button
                         aria-label="expand row"
                         size="small"
                         onClick={onShowCharactersHandle}
                     >
-                        {row.residents?.length} {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                        {table_cell_4} {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </Button>
-                </TableCell>
+                </TableCell> : null}
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -59,10 +73,10 @@ const ResidentRow = (props: { row: ILocation }) => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row?.residentsData?.map((resident) => (
-                                        <TableRow key={resident.id}>
+                                    {table_cell_data?.map((item) => (
+                                        <TableRow key={item.id}>
                                             <TableCell component="th" scope="row">
-                                                {resident.name}
+                                                {item.name}
                                             </TableCell>
                                             {/* <TableCell>{historyRow.customerId}</TableCell>
                                             <TableCell align="right">{historyRow.amount}</TableCell>

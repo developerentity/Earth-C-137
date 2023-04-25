@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { getLocations, setLocationsPage } from '../app/slices/locationsSlice';
+import { getLocations, getResidentsForOneLocationById, setLocationsPage } from '../app/slices/locationsSlice';
 import ResidentRow from './ResidentRow';
 
 
@@ -34,6 +34,10 @@ const LocationsView = () => {
         dispatch(setLocationsPage(newPage))
     }
 
+    const callbackFunc = (id: number | string) => {
+        dispatch(getResidentsForOneLocationById(id))
+    }
+
     return (
         <Box py={2}>
             <Paper>
@@ -49,7 +53,16 @@ const LocationsView = () => {
                         </TableHead>
                         <TableBody>
                             {locations.map((row) => (
-                                <ResidentRow key={row.name} row={row} />
+                                <ResidentRow
+                                    key={row.name}
+                                    table_cell_id={row.id}
+                                    table_cell_1={row.name}
+                                    table_cell_2={row.type}
+                                    table_cell_3={row.dimension}
+                                    table_cell_4={row.residents.length}
+                                    table_cell_func={() => callbackFunc(row.id)}
+                                    table_cell_data={row.residentsData}
+                                />
                             ))}
                         </TableBody>
                     </Table>
