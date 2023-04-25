@@ -1,8 +1,6 @@
-import {
-    Container,
-    MenuItem,
-} from "@mui/material"
-import { NavLink, Outlet, useLoaderData } from "react-router-dom";
+import { Container } from "@mui/material"
+import { Outlet } from "react-router-dom";
+import Header from "../components/Header";
 
 const list = [
     {
@@ -27,33 +25,13 @@ export async function loader() {
     return { navList };
 }
 
-const Root = () => {
-
-    const { navList }: any = useLoaderData();
-
-    return (
-        <>
-            <nav>
-                {navList.map((item: { title: string; href: string }) => (
-                    <NavLink
-                        key={item.title}
-                        to={item.href}
-                        style={{ textDecoration: "none" }}
-                        className={({ isActive, isPending }) =>
-                            isActive ? "active" : isPending ? "pending" : ""
-                        }
-                    >
-                        <MenuItem>
-                            {item.title}
-                        </MenuItem>
-                    </NavLink>
-                ))}
-            </nav>
-            <Container>
-                <Outlet />
-            </ Container>
-        </>
-    )
-}
+const Root = () => (
+    <>
+        <Header />
+        <Container>
+            <Outlet />
+        </ Container>
+    </>
+)
 
 export default Root;

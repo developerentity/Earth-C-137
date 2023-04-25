@@ -40,14 +40,14 @@ const CharactersView = () => {
   }
 
   return (
-    <Box sx={{ mx: 3, maxHeight: "100vh" }}>
+    <Box>
       <SearchComponent value={instantQuery} setValue={setInstantQuery} />
       <Grid container justifyContent="center" spacing={1}>
         {characters.map((item) => (
           <Grid
             key={item.id}
             item
-            xs={2.8}
+            xs={6}
             sm={2.4}
             md={1.2}>
             <OneCharacter character={item} />

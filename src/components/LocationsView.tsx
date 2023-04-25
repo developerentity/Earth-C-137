@@ -1,4 +1,5 @@
 import {
+    Box,
     Paper,
     Table,
     TableBody,
@@ -33,38 +34,39 @@ const LocationsView = () => {
         dispatch(setLocationsPage(newPage))
     }
 
-
     return (
-        <Paper>
-            <TableContainer>
-                <Table aria-label="locations table" >
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell align="right">Type</TableCell>
-                            <TableCell align="right">Dimension</TableCell>
-                            <TableCell align="right">Residents</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {locations.map((row) => (
-                            <ResidentRow key={row.name} row={row} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TableFooter>
-                <TablePagination
-                    // rowsPerPageOptions={[10, 20, 100]}
-                    component="div"
-                    count={count}
-                    rowsPerPage={perPage}
-                    page={page}
-                    onPageChange={handlePageChange}
-                // onRowsPerPageChange={() => { }}
-                />
-            </TableFooter>
-        </Paper>
+        <Box py={2}>
+            <Paper>
+                <TableContainer>
+                    <Table aria-label="locations table" >
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell align="right">Type</TableCell>
+                                <TableCell align="right">Dimension</TableCell>
+                                <TableCell align="right">Residents</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {locations.map((row) => (
+                                <ResidentRow key={row.name} row={row} />
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TableFooter>
+                    <TablePagination
+                        // rowsPerPageOptions={[10, 20, 100]}
+                        component="div"
+                        count={count}
+                        rowsPerPage={perPage}
+                        page={page}
+                        onPageChange={handlePageChange}
+                    // onRowsPerPageChange={() => { }}
+                    />
+                </TableFooter>
+            </Paper>
+        </Box>
     )
 }
 

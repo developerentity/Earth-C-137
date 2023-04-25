@@ -26,9 +26,9 @@ body {
 }
 
 nav a {
-  color: #61dafb;
+  color: #ffffff;
 }
 
 nav a.active {
-  color: #818181;
+  color: #61dafb;
 }
