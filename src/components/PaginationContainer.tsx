@@ -23,8 +23,7 @@ const PaginationContainer = ({
       <Pagination
         count={Math.floor(count / perPage + 1)}
         page={page}
-        // variant="outlined"
-        // shape="rounded"
+        shape="rounded"
         onChange={(el, value: number) => {
           setPage(value);
         }}

@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { getLocations, setLocationsPage } from '../app/slices/locationsSlice';
 import ResidentRow from './ResidentRow';
 
+
 const LocationsView = () => {
 
     const dispatch = useAppDispatch();
@@ -56,13 +57,12 @@ const LocationsView = () => {
                 </TableContainer>
                 <TableFooter>
                     <TablePagination
-                        // rowsPerPageOptions={[10, 20, 100]}
                         component="div"
                         count={count}
                         rowsPerPage={perPage}
                         page={page}
                         onPageChange={handlePageChange}
-                    // onRowsPerPageChange={() => { }}
+                        rowsPerPageOptions={[]}
                     />
                 </TableFooter>
             </Paper>
