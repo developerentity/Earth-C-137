@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { getLocations, getResidentsForOneLocationById, setLocationsPage } from '../app/slices/locationsSlice';
 import ResidentRow from './ResidentRow';
+import TableComponent from './TableComponent';
 
 
 const LocationsView = () => {
@@ -34,13 +35,23 @@ const LocationsView = () => {
         dispatch(setLocationsPage(newPage))
     }
 
-    const callbackFunc = (id: number | string) => {
+    const handleOnCharacters = (id: number | string) => {
         dispatch(getResidentsForOneLocationById(id))
     }
 
     return (
         <Box py={2}>
-            <Paper>
+            <TableComponent
+                count={count}
+                perPage={perPage}
+                page={page}
+                handlePageChange={handlePageChange}
+                handleOnCharacters={handleOnCharacters}
+                items={locations}
+                tableAreaLabel='Locations table'
+                dynamicRowsAreaLabel='Residents on location'
+            />
+            {/* <Paper>
                 <TableContainer>
                     <Table aria-label="locations table" >
                         <TableHead>
@@ -60,8 +71,9 @@ const LocationsView = () => {
                                     table_cell_2={row.type}
                                     table_cell_3={row.dimension}
                                     table_cell_4={row.residents.length}
-                                    table_cell_func={() => callbackFunc(row.id)}
+                                    table_cell_func={handleOnCharacters}
                                     table_cell_data={row.residentsData}
+                                    aria_label={'residents of location'}
                                 />
                             ))}
                         </TableBody>
@@ -75,7 +87,7 @@ const LocationsView = () => {
                     onPageChange={handlePageChange}
                     rowsPerPageOptions={[]}
                 />
-            </Paper>
+            </Paper> */}
         </Box>
     )
 }

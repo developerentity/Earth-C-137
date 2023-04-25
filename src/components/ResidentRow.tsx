@@ -22,6 +22,7 @@ type TProps = {
     table_cell_4?: number
     table_cell_func?: () => void
     table_cell_data: Array<ICharacter> | null
+    aria_label?: string
 }
 
 const ResidentRow = (props: TProps) => {
@@ -32,7 +33,8 @@ const ResidentRow = (props: TProps) => {
         table_cell_3,
         table_cell_4,
         table_cell_func,
-        table_cell_data
+        table_cell_data,
+        aria_label,
     } = props;
     const [open, setOpen] = useState(false);
 
@@ -47,15 +49,16 @@ const ResidentRow = (props: TProps) => {
                 <TableCell component="th" scope="row">{table_cell_1}</TableCell>
                 {table_cell_2 ? <TableCell align="right">{table_cell_2}</TableCell> : null}
                 {table_cell_3 ? <TableCell align="right">{table_cell_3}</TableCell> : null}
-                {table_cell_4 ? <TableCell align="right">
+                <TableCell align="right">
                     <Button
                         aria-label="expand row"
                         size="small"
+                        disabled={table_cell_4 === 0}
                         onClick={onShowCharactersHandle}
                     >
                         {table_cell_4} {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </Button>
-                </TableCell> : null}
+                </TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -64,7 +67,7 @@ const ResidentRow = (props: TProps) => {
                             <Typography variant="h6" gutterBottom component="div">
                                 Residents
                             </Typography>
-                            <Table size="small" aria-label="residents of location">
+                            <Table size="small" aria-label={aria_label}>
                                 <TableHead>
                                     <TableRow>
                                         {/* <TableCell>Customer</TableCell>
