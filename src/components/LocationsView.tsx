@@ -5,7 +5,6 @@ import {
     TableBody,
     TableCell,
     TableContainer,
-    TableFooter,
     TableHead,
     TablePagination,
     TableRow,
@@ -55,16 +54,14 @@ const LocationsView = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <TableFooter>
-                    <TablePagination
-                        component="div"
-                        count={count}
-                        rowsPerPage={perPage}
-                        page={page}
-                        onPageChange={handlePageChange}
-                        rowsPerPageOptions={[]}
-                    />
-                </TableFooter>
+                <TablePagination
+                    component="div"
+                    count={count}
+                    rowsPerPage={perPage}
+                    page={page}
+                    onPageChange={handlePageChange}
+                    rowsPerPageOptions={[]}
+                />
             </Paper>
         </Box>
     )
