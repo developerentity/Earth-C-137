@@ -1,10 +1,11 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
 import ResidentRow from "./ResidentRow"
 import { ILocation } from "../interfaces/locationInterface"
+import { IEpisode } from "../interfaces/episodeInterface"
 
 type TProps = {
     cells: Array<string>
-    items: Array<ILocation>
+    items: Array<ILocation> | Array<IEpisode>
     count: number
     perPage: number
     page: number
