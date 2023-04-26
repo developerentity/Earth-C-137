@@ -17,7 +17,7 @@ import { ICharacter } from "../../interfaces/characterInterface";
 const initialState: IEpisodesInitialState = {
   query: "",
   count: 0,
-  page: 1,
+  page: 0,
   perPage: 20,
   episodes: [],
 };
@@ -76,7 +76,7 @@ export const getEpisodes = (): AppThunk<void> => {
     const { episodesSlice } = getState();
     try {
       const response = await fetchEpisodes({
-        page: episodesSlice.page,
+        page: episodesSlice.page + 1,
         name: episodesSlice.query,
       });
       dispatch(setCount(response.info.count));
