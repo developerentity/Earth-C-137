@@ -1,8 +1,10 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
 import ResidentRow from "./ResidentRow"
+import { ILocation } from "../interfaces/locationInterface"
 
 type TProps = {
-    items: Array<any>
+    cells: Array<string>
+    items: Array<ILocation>
     count: number
     perPage: number
     page: number
@@ -13,6 +15,7 @@ type TProps = {
 }
 
 const TableComponent = ({
+    cells,
     items,
     count,
     perPage,
@@ -28,21 +31,23 @@ const TableComponent = ({
             <Table aria-label={tableAreaLabel} >
                 <TableHead>
                     <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell align="right">Type</TableCell>
-                        <TableCell align="right">Dimension</TableCell>
-                        <TableCell align="right">Residents</TableCell>
+                        {cells.map((item, index) =>
+                            <TableCell
+                                key={item}
+                                align={index > 0 ? 'right' : 'left'}
+                                sx={{ '::first-letter': { 'textTransform': 'uppercase' } }}>
+                                {item.replace(/_/g, ' ')}
+                            </TableCell>
+                        )}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {items.map((row) => (
                         <ResidentRow
-                            key={row.name}
-                            table_cell_id={row.id}
-                            table_cell_1={row.name}
-                            table_cell_2={row.type}
-                            table_cell_3={row.dimension}
-                            table_cell_4={row.residents.length}
+                            key={row.id}
+                            cells={cells}
+                            row={row}
+
                             table_cell_func={() => handleOnCharacters(row.id)}
                             table_cell_data={row.residentsData}
                             aria_label={dynamicRowsAreaLabel}

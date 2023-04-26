@@ -15,11 +15,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { ICharacter } from '../interfaces/characterInterface';
 
 type TProps = {
-    table_cell_id: string | number
-    table_cell_1: string
-    table_cell_2?: string
-    table_cell_3?: string
-    table_cell_4?: number
+    cells: Array<string>
+    row: any
     table_cell_func?: () => void
     table_cell_data: Array<ICharacter> | null
     aria_label?: string
@@ -28,10 +25,8 @@ type TProps = {
 const ResidentRow = (props: TProps) => {
 
     const {
-        table_cell_1,
-        table_cell_2,
-        table_cell_3,
-        table_cell_4,
+        cells,
+        row,
         table_cell_func,
         table_cell_data,
         aria_label,
@@ -46,20 +41,28 @@ const ResidentRow = (props: TProps) => {
     return (
         <>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell component="th" scope="row">{table_cell_1}</TableCell>
-                {table_cell_2 ? <TableCell align="right">{table_cell_2}</TableCell> : null}
-                {table_cell_3 ? <TableCell align="right">{table_cell_3}</TableCell> : null}
-                <TableCell align="right">
-                    <Button
-                        aria-label="expand row"
-                        size="small"
-                        disabled={table_cell_4 === 0}
-                        onClick={onShowCharactersHandle}
-                    >
-                        {table_cell_4} {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </Button>
+                {cells.map((key, index) => <TableCell
+                    key={key}
+                    component={index === 0 ? 'th' : undefined}
+                    scope={index === 0 ? 'row' : undefined}
+                    align={index !== 0 ? 'right' : undefined}
+                >
+                    {
+                        typeof row[key] === "object"
+                            ? <Button
+                                aria-label="expand row"
+                                size="small"
+                                disabled={row[key].length === 0}
+                                onClick={onShowCharactersHandle}
+                            >
+                                {row[key].length} {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                            </Button>
+                            : <>{row[key]}</>
+                    }
                 </TableCell>
+                )}
             </TableRow>
+
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
