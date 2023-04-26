@@ -4,7 +4,7 @@ interface IPaginationContainerProps {
   page: number;
   count: number;
   perPage: number;
-  setPage: (value: number) => any;
+  setPage: (value: number) => void;
 }
 
 const PaginationContainer = ({
