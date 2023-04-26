@@ -35,7 +35,7 @@ const TableComponent = ({
                         {cells.map((item, index) =>
                             <TableCell
                                 key={item}
-                                align={index > 0 ? 'right' : 'left'}
+                                align={index > 0 ? 'right' : undefined}
                                 sx={{ '::first-letter': { 'textTransform': 'uppercase' } }}>
                                 {item.replace(/_/g, ' ')}
                             </TableCell>

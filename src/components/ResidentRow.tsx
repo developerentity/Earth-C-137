@@ -5,7 +5,6 @@ import {
     Table,
     TableBody,
     TableCell,
-    TableHead,
     TableRow,
     Typography,
 } from '@mui/material';
@@ -71,24 +70,12 @@ const ResidentRow = (props: TProps) => {
                                 Residents
                             </Typography>
                             <Table size="small" aria-label={aria_label}>
-                                <TableHead>
-                                    <TableRow>
-                                        {/* <TableCell>Customer</TableCell>
-                                        <TableCell align="right">Amount</TableCell>
-                                        <TableCell align="right">Total price ($)</TableCell> */}
-                                    </TableRow>
-                                </TableHead>
                                 <TableBody>
                                     {table_cell_data?.map((item) => (
                                         <TableRow key={item.id}>
                                             <TableCell component="th" scope="row">
                                                 {item.name}
                                             </TableCell>
-                                            {/* <TableCell>{historyRow.customerId}</TableCell>
-                                            <TableCell align="right">{historyRow.amount}</TableCell>
-                                            <TableCell align="right">
-                                                {Math.round(historyRow.amount * row.price * 100) / 100}
-                                            </TableCell> */}
                                         </TableRow>
                                     ))}
                                 </TableBody>
