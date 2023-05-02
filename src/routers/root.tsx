@@ -1,6 +1,8 @@
-import { Container } from "@mui/material"
+import { Backdrop, Container } from "@mui/material"
+import CircularProgress from '@mui/material/CircularProgress';
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
+import { useAppSelector } from "../app/hooks";
 
 const list = [
     {
@@ -25,13 +27,24 @@ export async function loader() {
     return { navList };
 }
 
-const Root = () => (
-    <>
-        <Header />
-        <Container>
-            <Outlet />
-        </ Container>
-    </>
-)
+const Root = () => {
+
+    const { appLoading } = useAppSelector(store => store.loadingSlice)
+
+    return (
+        <>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={appLoading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            <Header />
+            <Container>
+                <Outlet />
+            </ Container>
+        </>
+    )
+}
 
 export default Root;
