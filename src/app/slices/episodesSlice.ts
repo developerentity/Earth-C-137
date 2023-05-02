@@ -13,6 +13,7 @@ import {
 } from "../../interfaces/episodeInterface";
 import { getDataByUrl } from "../../requests";
 import { ICharacter } from "../../interfaces/characterInterface";
+import { setLoading } from "./loadingSlice";
 
 const initialState: IEpisodesInitialState = {
   query: "",
@@ -75,14 +76,17 @@ export const getEpisodes = (): AppThunk<void> => {
   return async (dispatch, getState) => {
     const { episodesSlice } = getState();
     try {
+      dispatch(setLoading(true));
       const response = await fetchEpisodes({
         page: episodesSlice.page + 1,
         name: episodesSlice.query,
       });
       dispatch(setCount(response.info.count));
       dispatch(setEpisodes(response.results));
+      dispatch(setLoading(false));
     } catch (error) {
-      return dispatch(setRequestError(error));
+      dispatch(setRequestError(error));
+      dispatch(setLoading(false));
     }
   };
 };
@@ -102,6 +106,7 @@ export const getResidentsForOneEpisodeById = (
     }
 
     try {
+      dispatch(setLoading(true));
       const results = [];
       for (const url of residentsUrlArray) {
         const result = await getDataByUrl(url);
@@ -113,8 +118,10 @@ export const getResidentsForOneEpisodeById = (
           residentsData: results,
         })
       );
+      dispatch(setLoading(false));
     } catch (error) {
-      return dispatch(setRequestError(error));
+      dispatch(setRequestError(error));
+      dispatch(setLoading(false));
     }
   };
 };

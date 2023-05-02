@@ -30,6 +30,8 @@ export const setRequestError = (err: any): AppThunk<void> => {
     if (err.data) {
       const message = Object.values(err.data).join("\n");
       enqueueSnackbar(message, { variant: "error" });
+    } else {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
     }
     const { errorsSlice } = getState();
     dispatch(slice.actions.setErrors([...errorsSlice.messages, err]));

@@ -11,6 +11,7 @@ import {
 import { fetchCharacters } from "../../requests/requests";
 import { RootState } from "../store";
 import { setRequestError } from "./errorsSlice";
+import { setLoading } from "./loadingSlice";
 
 const initialState: ICharactersInitialState = {
   query: "",
@@ -56,14 +57,17 @@ export const getCharacters = (): AppThunk<void> => {
   return async (dispatch, getState) => {
     const { charactersSlice } = getState();
     try {
+      dispatch(setLoading(true));
       const response = await fetchCharacters({
         page: charactersSlice.page,
         name: charactersSlice.query,
       });
       dispatch(setCount(response.info.count));
       dispatch(setCharacters(response.results));
+      dispatch(setLoading(false));
     } catch (error) {
-        return dispatch(setRequestError(error));
+      dispatch(setRequestError(error));
+      dispatch(setLoading(false));
     }
   };
 };

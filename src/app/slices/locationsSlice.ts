@@ -13,6 +13,7 @@ import { getDataByUrl } from "../../requests";
 import { fetchLocations } from "../../requests/requests";
 import { RootState } from "../store";
 import { setRequestError } from "./errorsSlice";
+import { setLoading } from "./loadingSlice";
 
 const initialState: ILocationsInitialState = {
   query: "",
@@ -72,14 +73,17 @@ export const getLocations = (): AppThunk<void> => {
   return async (dispatch, getState) => {
     const { locationsSlice } = getState();
     try {
+      dispatch(setLoading(true));
       const response = await fetchLocations({
         page: locationsSlice.page + 1,
         name: locationsSlice.query,
       });
       dispatch(setCount(response.info.count));
       dispatch(setLocations(response.results));
+      dispatch(setLoading(false));
     } catch (error) {
-      return dispatch(setRequestError(error));
+      dispatch(setRequestError(error));
+      dispatch(setLoading(false));
     }
   };
 };
@@ -99,6 +103,7 @@ export const getResidentsForOneLocationById = (
     }
 
     try {
+      dispatch(setLoading(true));
       const results = [];
       for (const url of residentsUrlArray) {
         const result = await getDataByUrl(url);
@@ -110,8 +115,10 @@ export const getResidentsForOneLocationById = (
           residentsData: results,
         })
       );
+      dispatch(setLoading(false));
     } catch (error) {
-      return dispatch(setRequestError(error));
+      dispatch(setRequestError(error));
+      dispatch(setLoading(false));
     }
   };
 };
